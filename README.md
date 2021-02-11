@@ -1,6 +1,6 @@
-# form_builder_map_field
+# form_map_field
 
-Map Input Field for flutter_form_builder package. Used to select coordinates on a map.
+Map Input Field for Flutter Forms. Used to select coordinates on a map.
 
 ## Setup
 
@@ -9,7 +9,7 @@ specified [here](https://pub.dev/packages/google_maps_flutter#-readme-tab-)
 
 ## Usage
 ```dart
-FormBuilderLocationField(
+FormLocationField(
   name: 'Coordinates',
   decoration: InputDecoration(labelText: 'Select Location'),
   markerIconColor: Colors.red,

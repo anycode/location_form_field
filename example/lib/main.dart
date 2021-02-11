@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_map_field/form_builder_map_field.dart';
+import 'package:form_map_field/form_builder_map_field.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,7 +23,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  GlobalKey<FormBuilderState> _formKey = GlobalKey();
+  GlobalKey<FormState> _formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +31,14 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('FormBuilderMapField Example'),
       ),
-      body: FormBuilder(
+      body: Form(
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: <Widget>[
               Container(
-                child: FormBuilderLocationField(
-                  name: 'coordinates',
+                child: FormLocationField(
                   decoration: InputDecoration(labelText: 'Select Location'),
                   markerIconColor: Colors.red,
                   markerIconSize: 50,

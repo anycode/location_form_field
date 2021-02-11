@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -8,45 +6,45 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationFieldDialog extends StatefulWidget {
-  final CameraPosition initialCameraPosition;
-  final IconData markerIcon;
+  final CameraPosition? initialCameraPosition;
+  final IconData? markerIcon;
   final double markerIconSize;
-  final Color markerIconColor;
-  final MapType mapType;
-  final bool myLocationButtonEnabled;
-  final bool myLocationEnabled;
-  final bool zoomGesturesEnabled;
-  final Set<Marker> markers;
-  final void Function(LatLng) onTap;
-  final EdgeInsets padding;
-  final bool buildingsEnabled;
-  final CameraTargetBounds cameraTargetBounds;
-  final Set<Circle> circles;
-  final bool compassEnabled;
-  final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
-  final bool indoorViewEnabled;
-  final bool mapToolbarEnabled;
-  final MinMaxZoomPreference minMaxZoomPreference;
-  final void Function() onCameraIdle;
-  final void Function() onCameraMoveStarted;
-  final void Function(LatLng) onLongPress;
-  final Set<Polygon> polygons;
-  final Set<Polyline> polylines;
-  final bool rotateGesturesEnabled;
-  final bool scrollGesturesEnabled;
-  final bool tiltGesturesEnabled;
-  final bool trafficEnabled;
-  final bool zoomControlsEnabled;
-  final bool liteModeEnabled;
-  final CameraPositionCallback onCameraMove;
-  final MapCreatedCallback onMapCreated;
+  final Color? markerIconColor;
+  final MapType? mapType;
+  final bool? myLocationButtonEnabled;
+  final bool? myLocationEnabled;
+  final bool? zoomGesturesEnabled;
+  final Set<Marker>? markers;
+  final void Function(LatLng)? onTap;
+  final EdgeInsets? padding;
+  final bool? buildingsEnabled;
+  final CameraTargetBounds? cameraTargetBounds;
+  final Set<Circle>? circles;
+  final bool? compassEnabled;
+  final Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers;
+  final bool? indoorViewEnabled;
+  final bool? mapToolbarEnabled;
+  final MinMaxZoomPreference? minMaxZoomPreference;
+  final void Function()? onCameraIdle;
+  final void Function()? onCameraMoveStarted;
+  final void Function(LatLng)? onLongPress;
+  final Set<Polygon>? polygons;
+  final Set<Polyline>? polylines;
+  final bool? rotateGesturesEnabled;
+  final bool? scrollGesturesEnabled;
+  final bool? tiltGesturesEnabled;
+  final bool? trafficEnabled;
+  final bool? zoomControlsEnabled;
+  final bool? liteModeEnabled;
+  final CameraPositionCallback? onCameraMove;
+  final MapCreatedCallback? onMapCreated;
 
   const LocationFieldDialog({
-    Key key,
+    Key? key,
     this.initialCameraPosition,
     this.mapType,
     this.markerIcon,
-    this.markerIconSize,
+    this.markerIconSize = 48,
     this.markerIconColor,
     this.myLocationButtonEnabled,
     this.myLocationEnabled,
@@ -83,8 +81,8 @@ class LocationFieldDialog extends StatefulWidget {
 
 class _LocationFieldDialogState extends State<LocationFieldDialog> {
   final Completer<GoogleMapController> _controllerCompleter = Completer();
-  CameraPosition _value;
-  CameraPosition _initialCameraPosition;
+  CameraPosition? _value;
+  CameraPosition? _initialCameraPosition;
 
   @override
   void initState() {
@@ -167,7 +165,7 @@ class _LocationFieldDialogState extends State<LocationFieldDialog> {
                       backgroundColor: theme.scaffoldBackgroundColor,
                       child: Icon(
                         Icons.close,
-                        color: theme.textTheme.bodyText1.color,
+                        color: theme.textTheme.bodyText1?.color,
                       ),
                       onPressed: () => Navigator.pop(context),
                       mini: true,

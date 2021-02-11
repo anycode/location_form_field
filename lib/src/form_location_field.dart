@@ -1,21 +1,18 @@
-// @dart=2.9
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'location_field_dialog.dart';
 
-class FormBuilderLocationField extends FormBuilderField<CameraPosition> {
+class FormLocationField extends FormField<CameraPosition> {
   /// Callback method for when the map is ready to be used.
   ///
   /// Used to receive a [GoogleMapController] for this [GoogleMap].
-  final MapCreatedCallback onMapCreated;
+  final MapCreatedCallback? onMapCreated;
 
   /// The initial position of the map's camera.
-  final CameraPosition initialCameraPosition;
+  final CameraPosition? initialCameraPosition;
 
   /// True if the map should show a compass when rotated.
   final bool compassEnabled;
@@ -32,45 +29,45 @@ class FormBuilderLocationField extends FormBuilderField<CameraPosition> {
   /// Preferred bounds for the camera zoom level.
   ///
   /// Actual bounds depend on map data and device.
-  final MinMaxZoomPreference minMaxZoomPreference;
+  final MinMaxZoomPreference? minMaxZoomPreference;
 
   /// True if the map view should respond to rotate gestures.
-  final bool rotateGesturesEnabled;
+  final bool? rotateGesturesEnabled;
 
   /// True if the map view should respond to scroll gestures.
-  final bool scrollGesturesEnabled;
+  final bool? scrollGesturesEnabled;
 
   /// True if the map view should show zoom controls. This includes two buttons
   /// to zoom in and zoom out. The default value is to show zoom controls.
   ///
   /// This is only supported on Android. And this field is silently ignored on iOS.
-  final bool zoomControlsEnabled;
+  final bool? zoomControlsEnabled;
 
   /// True if the map view should respond to zoom gestures.
-  final bool zoomGesturesEnabled;
+  final bool? zoomGesturesEnabled;
 
   /// True if the map view should be in lite mode. Android only.
   ///
   /// See https://developers.google.com/maps/documentation/android-sdk/lite#overview_of_lite_mode for more details.
-  final bool liteModeEnabled;
+  final bool? liteModeEnabled;
 
   /// True if the map view should respond to tilt gestures.
-  final bool tiltGesturesEnabled;
+  final bool? tiltGesturesEnabled;
 
   /// Padding to be set on map. See https://developers.google.com/maps/documentation/android-sdk/map#map_padding for more details.
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
 
   /// Markers to be placed on the map.
-  final Set<Marker> markers;
+  final Set<Marker>? markers;
 
   /// Polygons to be placed on the map.
-  final Set<Polygon> polygons;
+  final Set<Polygon>? polygons;
 
   /// Polylines to be placed on the map.
-  final Set<Polyline> polylines;
+  final Set<Polyline>? polylines;
 
   /// Circles to be placed on the map.
-  final Set<Circle> circles;
+  final Set<Circle>? circles;
 
   /// Called when the camera starts moving.
   ///
@@ -80,24 +77,24 @@ class FormBuilderLocationField extends FormBuilderField<CameraPosition> {
   /// 2. Programmatically initiated animation.
   /// 3. Camera motion initiated in response to user gestures on the map.
   ///    For example: pan, tilt, pinch to zoom, or rotate.
-  final VoidCallback onCameraMoveStarted;
+  final VoidCallback? onCameraMoveStarted;
 
   /// Called repeatedly as the camera continues to move after an
   /// onCameraMoveStarted call.
   ///
   /// This may be called as often as once every frame and should
   /// not perform expensive operations.
-  final CameraPositionCallback onCameraMove;
+  final CameraPositionCallback? onCameraMove;
 
   /// Called when camera movement has ended, there are no pending
   /// animations and the user has stopped interacting with the map.
-  final VoidCallback onCameraIdle;
+  final VoidCallback? onCameraIdle;
 
   /// Called every time a [GoogleMap] is tapped.
-  final ArgumentCallback<LatLng> onTap;
+  final ArgumentCallback<LatLng>? onTap;
 
   /// Called every time a [GoogleMap] is long pressed.
-  final ArgumentCallback<LatLng> onLongPress;
+  final ArgumentCallback<LatLng>? onLongPress;
 
   /// True if a "My Location" layer should be shown on the map.
   ///
@@ -155,30 +152,32 @@ class FormBuilderLocationField extends FormBuilderField<CameraPosition> {
   ///
   /// When this set is empty or null, the map will only handle pointer events for gestures that
   /// were not claimed by any other gesture recognizer.
-  final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
+  final Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers;
 
   //TODO: Add documentation
   final IconData markerIcon;
   final double markerIconSize;
   final Color markerIconColor;
   final double height;
-  final bool allowClear;
-  final Widget resetIcon;
-  final TextEditingController controller;
+  final bool? allowClear;
+  final Widget? resetIcon;
+  final ValueChanged<CameraPosition?>? onChanged;
+  final VoidCallback? onReset;
+  final FocusNode? focusNode;
+  final TextEditingController? controller;
 
-  FormBuilderLocationField({
-    Key key,
+  FormLocationField({
+    Key? key,
     //From Super
-    @required String name,
-    FormFieldValidator<CameraPosition> validator,
+    FormFieldValidator<CameraPosition>? validator,
     InputDecoration decoration = const InputDecoration(),
-    ValueChanged<CameraPosition> onChanged,
-    ValueTransformer<CameraPosition> valueTransformer,
+    this.onChanged,
     bool enabled = true,
-    FormFieldSetter onSaved,
+    FormFieldSetter? onSaved,
     AutovalidateMode autovalidateMode = AutovalidateMode.disabled,
-    VoidCallback onReset,
-    FocusNode focusNode,
+    this.onReset,
+    this.focusNode,
+    this.controller,
     this.allowClear = true,
     this.resetIcon = const Icon(Icons.close),
     this.markerIcon = Icons.person_pin_circle_sharp,
@@ -214,30 +213,22 @@ class FormBuilderLocationField extends FormBuilderField<CameraPosition> {
     this.onMapCreated,
     this.initialCameraPosition,
     this.onCameraMove,
-    this.controller,
   }) : super(
           key: key,
           initialValue: initialCameraPosition,
-          name: name,
           validator: validator,
-          valueTransformer: valueTransformer,
-          onChanged: onChanged,
           autovalidateMode: autovalidateMode,
           onSaved: onSaved,
           enabled: enabled,
-          onReset: onReset,
-          decoration: decoration,
           builder: (FormFieldState<CameraPosition> field) {
-            final state = field as _FormBuilderLocationFieldState;
-            final InputDecoration effectiveDecoration =
-                (decoration ?? const InputDecoration()).applyDefaults(Theme.of(field.context).inputDecorationTheme);
-
+            final state = field as _FormLocationFieldState;
+            final InputDecoration effectiveDecoration = decoration.applyDefaults(Theme.of(field.context).inputDecorationTheme);
             return TextField(
               decoration: effectiveDecoration.copyWith(
                 errorText: field.errorText,
                 suffixIcon: state.shouldShowClearIcon(effectiveDecoration)
                     ? IconButton(
-                        icon: resetIcon,
+                        icon: resetIcon!,
                         onPressed: state.clear,
                       )
                     : null,
@@ -245,8 +236,8 @@ class FormBuilderLocationField extends FormBuilderField<CameraPosition> {
               enabled: enabled,
               // Setting readOnly to be true hides the keyboard
               readOnly: true,
-              controller: state._textFieldController,
-              focusNode: state.effectiveFocusNode,
+              controller: field._textFieldController,
+              focusNode: field._focusNode,
               // style: style,
               // autofocus: autofocus,
             );
@@ -254,69 +245,66 @@ class FormBuilderLocationField extends FormBuilderField<CameraPosition> {
         );
 
   @override
-  _FormBuilderLocationFieldState createState() => _FormBuilderLocationFieldState();
+  _FormLocationFieldState createState() => _FormLocationFieldState();
 }
 
-class _FormBuilderLocationFieldState extends FormBuilderFieldState<FormBuilderLocationField, CameraPosition> {
-  TextEditingController _textFieldController;
-
-  String get valueString => value?.target?.toString() ?? '';
+class _FormLocationFieldState extends FormFieldState<CameraPosition> {
+  late TextEditingController _textFieldController;
+  late FocusNode _focusNode;
 
   @override
   void initState() {
     super.initState();
-    _textFieldController = widget.controller ?? TextEditingController();
-    effectiveFocusNode?.addListener(_handleFocus);
+    final wdg = widget as FormLocationField;
+    _textFieldController = wdg.controller ?? TextEditingController();
+    _focusNode = wdg.focusNode ?? FocusNode();
+    _focusNode.addListener(_handleFocus);
   }
 
-  @override
-  void dispose() {
-    // Dispose the _textFieldController when initState created it
-    if (null == widget.controller) {
-      _textFieldController.dispose();
-    }
-    super.dispose();
-  }
+  String get valueString => value?.target?.toString() ?? '';
 
   Future<void> _handleFocus() async {
-    if (effectiveFocusNode.hasFocus && widget.enabled) {
+    if (_focusNode.hasFocus && widget.enabled) {
       await Future.microtask(() => FocusScope.of(context).requestFocus(FocusNode()));
       final newValue = await showDialog<CameraPosition>(
         context: context,
-        builder: (context) => LocationFieldDialog(
-          initialCameraPosition: value ?? widget.initialCameraPosition,
-          onTap: widget.onTap,
-          buildingsEnabled: widget.buildingsEnabled,
-          padding: widget.padding,
-          cameraTargetBounds: widget.cameraTargetBounds,
-          circles: widget.circles,
-          compassEnabled: widget.compassEnabled,
-          gestureRecognizers: widget.gestureRecognizers,
-          indoorViewEnabled: widget.indoorViewEnabled,
-          mapToolbarEnabled: widget.mapToolbarEnabled,
-          mapType: widget.mapType,
-          markerIcon: widget.markerIcon,
-          markerIconColor: widget.markerIconColor,
-          markerIconSize: widget.markerIconSize,
-          markers: widget.markers,
-          minMaxZoomPreference: widget.minMaxZoomPreference,
-          myLocationButtonEnabled: widget.myLocationButtonEnabled,
-          myLocationEnabled: widget.myLocationEnabled,
-          onCameraIdle: widget.onCameraIdle,
-          onCameraMoveStarted: widget.onCameraMoveStarted,
-          onLongPress: widget.onLongPress,
-          polygons: widget.polygons,
-          polylines: widget.polylines,
-          rotateGesturesEnabled: widget.rotateGesturesEnabled,
-          scrollGesturesEnabled: widget.scrollGesturesEnabled,
-          tiltGesturesEnabled: widget.tiltGesturesEnabled,
-          trafficEnabled: widget.trafficEnabled,
-          zoomGesturesEnabled: widget.zoomGesturesEnabled,
-          liteModeEnabled: widget.liteModeEnabled,
-          zoomControlsEnabled: widget.zoomControlsEnabled,
-          onCameraMove: widget.onCameraMove,
-          onMapCreated: widget.onMapCreated,
-        ),
+        builder: (context) {
+          final wdg = widget as FormLocationField;
+          return LocationFieldDialog(
+            initialCameraPosition: value ?? wdg.initialCameraPosition,
+            onTap: wdg.onTap,
+            buildingsEnabled: wdg.buildingsEnabled,
+            padding: wdg.padding,
+            cameraTargetBounds: wdg.cameraTargetBounds,
+            circles: wdg.circles,
+            compassEnabled: wdg.compassEnabled,
+            gestureRecognizers: wdg.gestureRecognizers,
+            indoorViewEnabled: wdg.indoorViewEnabled,
+            mapToolbarEnabled: wdg.mapToolbarEnabled,
+            mapType: wdg.mapType,
+            markerIcon: wdg.markerIcon,
+            markerIconColor: wdg.markerIconColor,
+            markerIconSize: wdg.markerIconSize,
+            markers: wdg.markers,
+            minMaxZoomPreference: wdg.minMaxZoomPreference,
+            myLocationButtonEnabled: wdg.myLocationButtonEnabled,
+            myLocationEnabled: wdg.myLocationEnabled,
+            onCameraIdle: wdg.onCameraIdle,
+            onCameraMoveStarted: wdg.onCameraMoveStarted,
+            onLongPress: wdg.onLongPress,
+            polygons: wdg.polygons,
+            polylines: wdg.polylines,
+            rotateGesturesEnabled: wdg.rotateGesturesEnabled,
+            scrollGesturesEnabled: wdg.scrollGesturesEnabled,
+            tiltGesturesEnabled: wdg.tiltGesturesEnabled,
+            trafficEnabled: wdg.trafficEnabled,
+            zoomGesturesEnabled: wdg.zoomGesturesEnabled,
+            liteModeEnabled: wdg.liteModeEnabled,
+            zoomControlsEnabled: wdg.zoomControlsEnabled,
+            onCameraMove: wdg.onCameraMove,
+            onMapCreated: wdg.onMapCreated,
+          );
+        },
       );
       if (newValue != null) {
         didChange(newValue);
@@ -325,10 +313,10 @@ class _FormBuilderLocationFieldState extends FormBuilderFieldState<FormBuilderLo
   }
 
   @override
-  void didChange(CameraPosition value) {
+  void didChange(CameraPosition? value) {
     super.didChange(value);
-    _textFieldController.text = widget.valueTransformer?.call(value)?.toString() ?? valueString;
-    widget.onChanged?.call(value);
+    _textFieldController.text = valueString;
+    (widget as FormLocationField).onChanged?.call(value);
   }
 
   void clear() async {
@@ -336,7 +324,7 @@ class _FormBuilderLocationFieldState extends FormBuilderFieldState<FormBuilderLo
     // Fix for ripple effect throwing exception
     // and the field staying gray.
     // https://github.com/flutter/flutter/issues/36324
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       setState(() => _textFieldController.clear());
     });
   }
@@ -345,6 +333,8 @@ class _FormBuilderLocationFieldState extends FormBuilderFieldState<FormBuilderLo
     Future.microtask(() => FocusScope.of(context).requestFocus(FocusNode()));
   }
 
-  bool shouldShowClearIcon([InputDecoration decoration]) =>
-      widget.resetIcon != null && (_textFieldController.text.isNotEmpty || effectiveFocusNode.hasFocus) && decoration?.suffixIcon == null;
+  bool shouldShowClearIcon([InputDecoration? decoration]) =>
+      (widget as FormLocationField).resetIcon != null &&
+      (_textFieldController.text.isNotEmpty || _focusNode.hasFocus) &&
+      decoration?.suffixIcon == null;
 }
