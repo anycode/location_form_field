@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'location_field_dialog.dart';
 
-class FormLocationField extends FormField<CameraPosition> {
+class LocationFormField extends FormField<CameraPosition> {
   /// Callback method for when the map is ready to be used.
   ///
   /// Used to receive a [GoogleMapController] for this [GoogleMap].
@@ -166,7 +166,7 @@ class FormLocationField extends FormField<CameraPosition> {
   final FocusNode? focusNode;
   final TextEditingController? controller;
 
-  FormLocationField({
+  LocationFormField({
     Key? key,
     //From Super
     FormFieldValidator<CameraPosition>? validator,
@@ -255,7 +255,7 @@ class _FormLocationFieldState extends FormFieldState<CameraPosition> {
   @override
   void initState() {
     super.initState();
-    final wdg = widget as FormLocationField;
+    final wdg = widget as LocationFormField;
     _textFieldController = wdg.controller ?? TextEditingController();
     _focusNode = wdg.focusNode ?? FocusNode();
     _focusNode.addListener(_handleFocus);
@@ -269,7 +269,7 @@ class _FormLocationFieldState extends FormFieldState<CameraPosition> {
       final newValue = await showDialog<CameraPosition>(
         context: context,
         builder: (context) {
-          final wdg = widget as FormLocationField;
+          final wdg = widget as LocationFormField;
           return LocationFieldDialog(
             initialCameraPosition: value ?? wdg.initialCameraPosition,
             onTap: wdg.onTap,
@@ -316,7 +316,7 @@ class _FormLocationFieldState extends FormFieldState<CameraPosition> {
   void didChange(CameraPosition? value) {
     super.didChange(value);
     _textFieldController.text = valueString;
-    (widget as FormLocationField).onChanged?.call(value);
+    (widget as LocationFormField).onChanged?.call(value);
   }
 
   void clear() async {
@@ -334,7 +334,7 @@ class _FormLocationFieldState extends FormFieldState<CameraPosition> {
   }
 
   bool shouldShowClearIcon([InputDecoration? decoration]) =>
-      (widget as FormLocationField).resetIcon != null &&
+      (widget as LocationFormField).resetIcon != null &&
       (_textFieldController.text.isNotEmpty || _focusNode.hasFocus) &&
       decoration?.suffixIcon == null;
 }

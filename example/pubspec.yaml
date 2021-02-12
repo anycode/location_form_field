@@ -1,7 +1,8 @@
 name: example
-description: Example app for form_builder_map_field package
-homepage: https://github.com/anycode/form_map_field/tree/master/example
+description: Example app for form_location_field package
+homepage: https://github.com/anycode/form_location_field/tree/master/example
 version: 1.0.0+1
+publish_to: 'none'
 
 environment:
   sdk: ">=2.12.0-0 <3.0.0"
@@ -10,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  form_map_field:
+  location_form_field:
     path: ../
 
 dev_dependencies:

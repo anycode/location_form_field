@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:form_map_field/form_builder_map_field.dart';
+import 'package:location_form_field/location_form_field.dart';
 
 void main() => runApp(MyApp());
 
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: <Widget>[
               Container(
-                child: FormLocationField(
+                child: LocationFormField(
                   decoration: InputDecoration(labelText: 'Select Location'),
                   markerIconColor: Colors.red,
                   markerIconSize: 50,
