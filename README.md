@@ -9,7 +9,7 @@ specified [here](https://pub.dev/packages/google_maps_flutter#-readme-tab-)
 
 ## Usage
 ```dart
-FormLocationField(
+LocationFormField(
   name: 'Coordinates',
   decoration: InputDecoration(labelText: 'Select Location'),
   markerIconColor: Colors.red,
