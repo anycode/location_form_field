@@ -159,8 +159,8 @@ class LocationFormField extends FormField<CameraPosition> {
   final double markerIconSize;
   final Color markerIconColor;
   final double height;
-  final bool? allowClear;
-  final Widget? resetIcon;
+  final bool allowClear;
+  final Widget resetIcon;
   final ValueChanged<CameraPosition?>? onChanged;
   final VoidCallback? onReset;
   final FocusNode? focusNode;
@@ -228,7 +228,7 @@ class LocationFormField extends FormField<CameraPosition> {
                 errorText: field.errorText,
                 suffixIcon: state.shouldShowClearIcon(effectiveDecoration)
                     ? IconButton(
-                        icon: resetIcon!,
+                        icon: resetIcon,
                         onPressed: state.clear,
                       )
                     : null,
@@ -334,7 +334,7 @@ class _FormLocationFieldState extends FormFieldState<CameraPosition> {
   }
 
   bool shouldShowClearIcon([InputDecoration? decoration]) =>
-      (widget as LocationFormField).resetIcon != null &&
+      (widget as LocationFormField).allowClear &&
       (_textFieldController.text.isNotEmpty || _focusNode.hasFocus) &&
       decoration?.suffixIcon == null;
 }

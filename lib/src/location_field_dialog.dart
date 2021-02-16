@@ -7,23 +7,23 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationFieldDialog extends StatefulWidget {
   final CameraPosition? initialCameraPosition;
-  final IconData? markerIcon;
+  final IconData markerIcon;
   final double markerIconSize;
-  final Color? markerIconColor;
-  final MapType? mapType;
-  final bool? myLocationButtonEnabled;
-  final bool? myLocationEnabled;
+  final Color markerIconColor;
+  final MapType mapType;
+  final bool myLocationButtonEnabled;
+  final bool myLocationEnabled;
   final bool? zoomGesturesEnabled;
   final Set<Marker>? markers;
   final void Function(LatLng)? onTap;
   final EdgeInsets? padding;
-  final bool? buildingsEnabled;
-  final CameraTargetBounds? cameraTargetBounds;
+  final bool buildingsEnabled;
+  final CameraTargetBounds cameraTargetBounds;
   final Set<Circle>? circles;
-  final bool? compassEnabled;
+  final bool compassEnabled;
   final Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers;
-  final bool? indoorViewEnabled;
-  final bool? mapToolbarEnabled;
+  final bool indoorViewEnabled;
+  final bool mapToolbarEnabled;
   final MinMaxZoomPreference? minMaxZoomPreference;
   final void Function()? onCameraIdle;
   final void Function()? onCameraMoveStarted;
@@ -33,7 +33,7 @@ class LocationFieldDialog extends StatefulWidget {
   final bool? rotateGesturesEnabled;
   final bool? scrollGesturesEnabled;
   final bool? tiltGesturesEnabled;
-  final bool? trafficEnabled;
+  final bool trafficEnabled;
   final bool? zoomControlsEnabled;
   final bool? liteModeEnabled;
   final CameraPositionCallback? onCameraMove;
@@ -42,35 +42,35 @@ class LocationFieldDialog extends StatefulWidget {
   const LocationFieldDialog({
     Key? key,
     this.initialCameraPosition,
-    this.mapType,
-    this.markerIcon,
-    this.markerIconSize = 48,
-    this.markerIconColor,
-    this.myLocationButtonEnabled,
-    this.myLocationEnabled,
-    this.zoomGesturesEnabled,
+    this.markerIcon = Icons.person_pin_circle_sharp,
+    this.markerIconSize = 30,
+    this.markerIconColor = Colors.black,
+    this.compassEnabled = true,
+    this.mapToolbarEnabled = true,
+    this.cameraTargetBounds = CameraTargetBounds.unbounded,
+    this.mapType = MapType.normal,
+    this.minMaxZoomPreference = MinMaxZoomPreference.unbounded,
+    this.rotateGesturesEnabled = true,
+    this.scrollGesturesEnabled = true,
+    this.zoomGesturesEnabled = true,
+    this.tiltGesturesEnabled = true,
+    this.myLocationEnabled = false,
+    this.myLocationButtonEnabled = true,
+    this.padding = EdgeInsets.zero,
+    this.indoorViewEnabled = false,
+    this.trafficEnabled = false,
+    this.buildingsEnabled = true,
+    this.zoomControlsEnabled = true,
+    this.liteModeEnabled = false,
     this.markers,
     this.onTap,
-    this.padding,
-    this.buildingsEnabled,
-    this.cameraTargetBounds,
     this.circles,
-    this.compassEnabled,
     this.gestureRecognizers,
-    this.indoorViewEnabled,
-    this.mapToolbarEnabled,
-    this.minMaxZoomPreference,
     this.onCameraIdle,
     this.onCameraMoveStarted,
     this.onLongPress,
     this.polygons,
     this.polylines,
-    this.rotateGesturesEnabled,
-    this.scrollGesturesEnabled,
-    this.tiltGesturesEnabled,
-    this.trafficEnabled,
-    this.zoomControlsEnabled,
-    this.liteModeEnabled,
     this.onCameraMove,
     this.onMapCreated,
   }) : super(key: key);
