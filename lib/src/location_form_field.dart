@@ -29,45 +29,45 @@ class LocationFormField extends FormField<CameraPosition> {
   /// Preferred bounds for the camera zoom level.
   ///
   /// Actual bounds depend on map data and device.
-  final MinMaxZoomPreference? minMaxZoomPreference;
+  final MinMaxZoomPreference minMaxZoomPreference;
 
   /// True if the map view should respond to rotate gestures.
-  final bool? rotateGesturesEnabled;
+  final bool rotateGesturesEnabled;
 
   /// True if the map view should respond to scroll gestures.
-  final bool? scrollGesturesEnabled;
+  final bool scrollGesturesEnabled;
 
   /// True if the map view should show zoom controls. This includes two buttons
   /// to zoom in and zoom out. The default value is to show zoom controls.
   ///
   /// This is only supported on Android. And this field is silently ignored on iOS.
-  final bool? zoomControlsEnabled;
+  final bool zoomControlsEnabled;
 
   /// True if the map view should respond to zoom gestures.
-  final bool? zoomGesturesEnabled;
+  final bool zoomGesturesEnabled;
 
   /// True if the map view should be in lite mode. Android only.
   ///
   /// See https://developers.google.com/maps/documentation/android-sdk/lite#overview_of_lite_mode for more details.
-  final bool? liteModeEnabled;
+  final bool liteModeEnabled;
 
   /// True if the map view should respond to tilt gestures.
-  final bool? tiltGesturesEnabled;
+  final bool tiltGesturesEnabled;
 
   /// Padding to be set on map. See https://developers.google.com/maps/documentation/android-sdk/map#map_padding for more details.
-  final EdgeInsets? padding;
+  final EdgeInsets padding;
 
   /// Markers to be placed on the map.
-  final Set<Marker>? markers;
+  final Set<Marker> markers;
 
   /// Polygons to be placed on the map.
-  final Set<Polygon>? polygons;
+  final Set<Polygon> polygons;
 
   /// Polylines to be placed on the map.
-  final Set<Polyline>? polylines;
+  final Set<Polyline> polylines;
 
   /// Circles to be placed on the map.
-  final Set<Circle>? circles;
+  final Set<Circle> circles;
 
   /// Called when the camera starts moving.
   ///
@@ -152,7 +152,7 @@ class LocationFormField extends FormField<CameraPosition> {
   ///
   /// When this set is empty or null, the map will only handle pointer events for gestures that
   /// were not claimed by any other gesture recognizer.
-  final Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers;
+  final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
 
   //TODO: Add documentation
   final IconData markerIcon;
@@ -201,15 +201,15 @@ class LocationFormField extends FormField<CameraPosition> {
     this.buildingsEnabled = true,
     this.zoomControlsEnabled = true,
     this.liteModeEnabled = false,
-    this.markers,
+    this.markers = const {},
     this.onTap,
-    this.circles,
-    this.gestureRecognizers,
+    this.circles = const {},
+    this.gestureRecognizers = const {},
     this.onCameraIdle,
     this.onCameraMoveStarted,
     this.onLongPress,
-    this.polygons,
-    this.polylines,
+    this.polygons = const {},
+    this.polylines = const {},
     this.onMapCreated,
     this.initialCameraPosition,
     this.onCameraMove,

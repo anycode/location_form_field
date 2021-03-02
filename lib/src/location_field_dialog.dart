@@ -13,29 +13,29 @@ class LocationFieldDialog extends StatefulWidget {
   final MapType mapType;
   final bool myLocationButtonEnabled;
   final bool myLocationEnabled;
-  final bool? zoomGesturesEnabled;
-  final Set<Marker>? markers;
+  final bool zoomGesturesEnabled;
+  final Set<Marker> markers;
   final void Function(LatLng)? onTap;
-  final EdgeInsets? padding;
+  final EdgeInsets padding;
   final bool buildingsEnabled;
   final CameraTargetBounds cameraTargetBounds;
-  final Set<Circle>? circles;
+  final Set<Circle> circles;
   final bool compassEnabled;
-  final Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers;
+  final Set<Factory<OneSequenceGestureRecognizer>> gestureRecognizers;
   final bool indoorViewEnabled;
   final bool mapToolbarEnabled;
-  final MinMaxZoomPreference? minMaxZoomPreference;
+  final MinMaxZoomPreference minMaxZoomPreference;
   final void Function()? onCameraIdle;
   final void Function()? onCameraMoveStarted;
   final void Function(LatLng)? onLongPress;
-  final Set<Polygon>? polygons;
-  final Set<Polyline>? polylines;
-  final bool? rotateGesturesEnabled;
-  final bool? scrollGesturesEnabled;
-  final bool? tiltGesturesEnabled;
+  final Set<Polygon> polygons;
+  final Set<Polyline> polylines;
+  final bool rotateGesturesEnabled;
+  final bool scrollGesturesEnabled;
+  final bool tiltGesturesEnabled;
   final bool trafficEnabled;
-  final bool? zoomControlsEnabled;
-  final bool? liteModeEnabled;
+  final bool zoomControlsEnabled;
+  final bool liteModeEnabled;
   final CameraPositionCallback? onCameraMove;
   final MapCreatedCallback? onMapCreated;
 
@@ -62,15 +62,15 @@ class LocationFieldDialog extends StatefulWidget {
     this.buildingsEnabled = true,
     this.zoomControlsEnabled = true,
     this.liteModeEnabled = false,
-    this.markers,
+    this.markers = const {},
     this.onTap,
-    this.circles,
-    this.gestureRecognizers,
+    this.circles = const {},
+    this.gestureRecognizers = const {},
     this.onCameraIdle,
     this.onCameraMoveStarted,
     this.onLongPress,
-    this.polygons,
-    this.polylines,
+    this.polygons = const {},
+    this.polylines = const {},
     this.onCameraMove,
     this.onMapCreated,
   }) : super(key: key);
@@ -82,7 +82,7 @@ class LocationFieldDialog extends StatefulWidget {
 class _LocationFieldDialogState extends State<LocationFieldDialog> {
   final Completer<GoogleMapController> _controllerCompleter = Completer();
   CameraPosition? _value;
-  CameraPosition? _initialCameraPosition;
+  late CameraPosition _initialCameraPosition;
 
   @override
   void initState() {
