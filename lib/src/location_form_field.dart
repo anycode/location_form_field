@@ -261,7 +261,7 @@ class _FormLocationFieldState extends FormFieldState<CameraPosition> {
     _focusNode.addListener(_handleFocus);
   }
 
-  String get valueString => value?.target?.toString() ?? '';
+  String get valueString => value?.target.toString() ?? '';
 
   Future<void> _handleFocus() async {
     if (_focusNode.hasFocus && widget.enabled) {
